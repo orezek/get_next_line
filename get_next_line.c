@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:58:19 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/05 00:40:42 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/05 00:50:02 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ char	*get_next_line(int fd)
 	}
 	new_line = malloc(sizeof(char) * n);
 	if(!new_line)
+	{
+		free(buf);
 		return (NULL);
+	}
 // initialize new_line to empty string to check if previous call returned line and the next call is on a new line
 	new_line[0] = '\0';
 // loop through buf until newline is found
@@ -59,10 +62,11 @@ char	*get_next_line(int fd)
 	}
 // if new line has content, return it
 	if (new_line[0] != '\0')
+	{
 		free(buf);
 		new_line[i] = '\0';
-
 		return (new_line);
+	}
 // if new line is empty, free memory and return NULL
 	free(new_line);
 	free(buf);
