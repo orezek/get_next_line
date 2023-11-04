@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:51:06 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/04 17:07:54 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/04 23:09:10 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define GET_NEXT_LINE_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+
+# define BUFFER_SIZE 1
 
 char	*get_next_line(int fd);
 #endif
