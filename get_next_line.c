@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:58:19 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/05 00:09:21 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/05 00:40:42 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 // read from fd into buf
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 // check if read was successful, fd is valid or buf is empty
-	if (bytes_read < 0 || errno == EBADF || buf[0] == '\0')
+	if (bytes_read <= 0 || errno == EBADF || buf[0] == '\0')
 	{
 		free(buf);
 		return (NULL);
@@ -48,6 +48,7 @@ char	*get_next_line(int fd)
 		if (buf[0] == '\n')
 		{
 			*(new_line + i) = buf[0];
+			new_line = realloc(new_line, sizeof(char) * n++);
 			*(new_line + i + 1) = '\0';
 			free(buf);
 			return (new_line);
@@ -60,6 +61,7 @@ char	*get_next_line(int fd)
 	if (new_line[0] != '\0')
 		free(buf);
 		new_line[i] = '\0';
+
 		return (new_line);
 // if new line is empty, free memory and return NULL
 	free(new_line);
