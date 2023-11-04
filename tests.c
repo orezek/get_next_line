@@ -20,7 +20,7 @@ void test_get_next_line() {
 
 	// Write some lines to the file
 	//char *lines[] = {"1\n", "Line 2\n", "Line 3\n", "Line 444 444 sdfsdf44\n", "Line 5\n", "\n"};
-	char *lines[] = {"1jlsfj;alsfjas;lfjasl;dkfjsdklfjsfdfjslkdfjasl;dfjas;ldfjasdl;fkjdasf;ladsjfl;asjfslfjdkfjdkfjdkfjffdfsfasdfalsjfs;lfjas;lfjsl;dfjsdlfjasfl;"};
+	char *lines[] = {"1jf;ladsjfl;asjfslfjdkfjdkfjdkfjffdfsfasdfalsjfs;lfjas;lfjsl;dfjsdlfjasfl;"};
 	//char *lines[] = {"Line 1\n", "Line 2\n", "Line 3\n", "Line 444 444 sdfsdf44\n", "Line 5\n", "\n", "", "   ", "\n\n\n\n\n"};
 	for (int i = 0; i < sizeof(lines) / sizeof(char*); i++) {
 		write(fd, lines[i], strlen(lines[i]));
