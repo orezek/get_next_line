@@ -12,7 +12,7 @@
 void test_get_next_line() {
     // Create a temporary file
     //char temp_filename[] = "/tmp/testfileXXXXXX";
-	char *temp_filename2 = "./file1_test.txt";
+	char *temp_filename2 = "./text.txt";
     //int fd = mkstemp(temp_filename);
 	int fd2 = open(temp_filename2, O_RDONLY);
     // if (fd < 0 || fd2 < 0 ) {
