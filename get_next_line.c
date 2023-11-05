@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:58:19 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/05 00:50:02 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/05 16:29:04 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*get_next_line(int fd)
 {
 	char	*buf;
 	char	*new_line;
+	char	*temp;
 	size_t	bytes_read;
 	int		n;
 	int		i;
@@ -24,6 +25,7 @@ char	*get_next_line(int fd)
 	i = 0;
 	buf = NULL;
 	new_line = NULL;
+	temp = NULL;
 // allocate memory for buf
 	buf = malloc(sizeof(char) * BUFFER_SIZE);
 // check if buf is valid
@@ -32,8 +34,13 @@ char	*get_next_line(int fd)
 // read from fd into buf
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 // check if read was successful, fd is valid or buf is empty
-	if (bytes_read <= 0 || errno == EBADF || buf[0] == '\0')
+	if (bytes_read <= 0 || buf[0] == '\0')
 	{
+		if (errno == EBADF )
+		{
+			free(buf);
+			return (NULL);
+		}
 		free(buf);
 		return (NULL);
 	}
@@ -51,13 +58,31 @@ char	*get_next_line(int fd)
 		if (buf[0] == '\n')
 		{
 			*(new_line + i) = buf[0];
-			new_line = realloc(new_line, sizeof(char) * n++);
+			temp = realloc(new_line, sizeof(char) * ++n);
+			if (!temp)
+			{
+				free(buf);
+				free(new_line);
+				new_line = NULL;
+				return (NULL);
+			}
+			new_line = temp;
+			temp = NULL;
 			*(new_line + i + 1) = '\0';
 			free(buf);
 			return (new_line);
 		}
 		*(new_line + i++) = buf[0];
-		new_line = realloc(new_line, sizeof(char) * ++n);
+		temp = realloc(new_line, sizeof(char) * ++n);
+		if (!temp)
+		{
+			free(buf);
+			free(new_line);
+			new_line = NULL;
+			return (NULL);
+		}
+		new_line = temp;
+		temp = NULL;
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
 // if new line has content, return it
