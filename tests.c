@@ -11,14 +11,14 @@
 
 void test_get_next_line() {
     // Create a temporary file
-    char temp_filename[] = "/tmp/testfileXXXXXX";
+    //char temp_filename[] = "/tmp/testfileXXXXXX";
 	char *temp_filename2 = "./file1_test.txt";
-    int fd = mkstemp(temp_filename);
+    //int fd = mkstemp(temp_filename);
 	int fd2 = open(temp_filename2, O_RDONLY);
-    if (fd < 0 || fd2 < 0 ) {
-        perror("Failed to open file");
-        return;
-	}
+    // if (fd < 0 || fd2 < 0 ) {
+    //     perror("Failed to open file");
+    //     return;
+	// }
 
 	// // Write some lines to the file
 	// //char *lines[] = {"1\n", "Line 2\n", "Line 3\n", "Line 444 444 sdfsdf44\n", "Line 5\n", "\n"};
@@ -40,16 +40,19 @@ void test_get_next_line() {
 	// 	free(line);
 	// }
 	char *line = get_next_line(fd2);
-	while(*line)
+	while(line != NULL)
 	{
 		printf("%s", line);
 		free(line);
 		line = get_next_line(fd2);
 	}
+
+
 	// Clean up
-	close(fd);
+	free(line);
+	//close(fd);
 	close(fd2);
-	remove(temp_filename);
+	//remove(temp_filename);
 }
 
 int main() {
