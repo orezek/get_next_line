@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:51:06 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/04 23:09:10 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/05 22:29:44 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # include <unistd.h>
 # include <errno.h>
 
-# define BUFFER_SIZE 1
+//# define BUFFER_SIZE 1
 
 char	*get_next_line(int fd);
+int		ft_strlen(char *str);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_countbytes(char *str);
 #endif
