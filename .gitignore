@@ -2,3 +2,4 @@
 **/.vscode/
 **/*.dSYM/
 **/*_tests.c
+**/.DS_Store
