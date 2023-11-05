@@ -3,3 +3,4 @@
 **/*.dSYM/
 **/*_tests.c
 **/.DS_Store
+tests
