@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:44:18 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/06 23:21:00 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/06 23:45:55 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ char	*ft_nwsplit_generator(char *str)
 
 int	main(void)
 {
-	char	*str = "ahoj,ja jsem Tomas";
+	char	*str = "ahoj,ja jsem aldo\na tohle je test\na tohle je dalsi test\n";
 	char	*result;
 
 	result = ft_nwsplit_generator(str);
 	while (result != NULL)
 	{
-		printf("%s\n", result);
+		printf("%s", result);
 		free(result);
 		result = ft_nwsplit_generator(str);
 	}
