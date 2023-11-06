@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:51:06 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/05 22:29:44 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/06 17:00:48 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+# include <string.h>
 
 //# define BUFFER_SIZE 1
 

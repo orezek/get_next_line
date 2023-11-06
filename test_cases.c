@@ -6,8 +6,7 @@
 #include <fcntl.h>
 #include "get_next_line.h"
 
-// // Assuming get_next_line is declared somewhere
-// char *get_next_line(int fd);
+//cc test_cases.c get_next_line.c  get_next_line_utils.c && ./a.out
 
 void test_get_next_line()
 {
@@ -15,16 +14,8 @@ void test_get_next_line()
 	int fd2 = open(temp_filename2, O_RDONLY);
 	char *line = get_next_line(fd2);
 	printf("%s", line);
-	// while(line != NULL)
-	// {
-	// 	printf("%s", line);
-	// 	line = get_next_line(fd2);
-	// }
-	// Clean up
 	free(line);
-	//close(fd);
 	close(fd2);
-	//remove(temp_filename);
 }
 
 int main() {
