@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   read_all_into_string.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/06 13:26:34 by orezek           ###   ########.fr       */
+/*   Created: 2023/11/06 13:21:45 by orezek            #+#    #+#             */
+/*   Updated: 2023/11/06 14:04:14 by orezek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+// doest not have any error checking and edge case handling
 
 char	*get_next_line(int fd)
 {
@@ -23,7 +25,7 @@ char	*get_next_line(int fd)
 	buf = NULL;
 	new_line = NULL;
 	temp = NULL;
-	buffer_size = 1;
+	buffer_size = 50;
 	buf = malloc(sizeof(char) * (buffer_size + 1));
 	new_line = malloc(sizeof(char) * 1);
 	bytes_read = read(fd, buf, buffer_size);
