@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:44:18 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/06 23:45:55 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/07 22:34:44 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	find_new_line_position(	char *str)
 }
 // Generator function that returns string and retains state
 // between calls. It will return NULL when there is no more string to return.
-char	*ft_nwsplit_generator(char *str)
+char	*ft_nlsplit_generator(char *str)
 {
 	static char	*arr;
 	char	*result;
@@ -79,12 +79,12 @@ int	main(void)
 	char	*str = "ahoj,ja jsem aldo\na tohle je test\na tohle je dalsi test\n";
 	char	*result;
 
-	result = ft_nwsplit_generator(str);
+	result = ft_nlsplit_generator(str);
 	while (result != NULL)
 	{
 		printf("%s", result);
 		free(result);
-		result = ft_nwsplit_generator(str);
+		result = ft_nlsplit_generator(str);
 	}
 	free(result);
 

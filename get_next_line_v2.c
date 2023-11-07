@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/07 19:24:17 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/07 22:25:25 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@
 	// 2.1.2 if it doesn't, it moves (strjoin)? the buffer into
 			// a new_line var, reads to the buffer, sets trailing \0 to the buffer
 			// and it contines until if either finds a new line or EOF (continues to 0)
-// 3. check if buffer is not empty
-	// 3.1 if it is, free the buffer and return NULL to the caller
-	// 3.2 if it is not, return the buffer to the caller
-// 4. caller receives a NULL pointer and knows that there is no more data to read.
+// 3. caller receives a NULL pointer and knows that there is no more data to read.
+
 int	ft_has_newline(char *str)
 {
 	while (*str)
@@ -65,7 +63,6 @@ int	ft_has_newline(char *str)
 	return (0);
 }
 
-
 char	*get_next_line(int fd)
 {
 	static char	*buf;
@@ -76,7 +73,6 @@ char	*get_next_line(int fd)
 
 	buffer_size = 50;
 	new_line = NULL;
-
 // 1
 	if (buf == NULL)
 	{
@@ -85,7 +81,7 @@ char	*get_next_line(int fd)
 		if (bytes_read <= 0)
 		{
 			free(buf);
-			return (NULL);
+			return (buf = NULL);
 		}
 		buf[bytes_read] = '\0';
 	}
@@ -96,10 +92,10 @@ char	*get_next_line(int fd)
 		{
 			new_line = ft_strjoin(new_line, buf); // does strjoin use malloc? what if both are empty or null?
 			bytes_read = read(fd, buf, buffer_size);
-			// 3.1
 			if (bytes_read == 0)
 			{
 				free(buf);
+				buf = NULL;
 				return (new_line);
 			}
 			buf[bytes_read] = '\0';
@@ -109,7 +105,7 @@ char	*get_next_line(int fd)
 		free(temp);
 		return (new_line);
 	}
-// 2.1.1 & 3.2
+// 2.1.1
 	if (ft_has_newline(buf))
 	{
 		new_line = ft_extract_line_and_movebytes(buf);

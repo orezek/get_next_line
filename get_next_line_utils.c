@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:24:23 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/06 10:06:27 by orezek           ###   ########.fr       */
+/*   Updated: 2023/11/07 22:42:33 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,19 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new_str);
 }
 
-int	ft_newline_position(char *str)
+int	ft_find_newline_position(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (*str != '\n')
+	while (*str)
+	{
+		if (*str == '\n')
+			return (i);
 		i++;
-	return (i);
+		str++;
+	}
+	return (-1);
 }
 
 int	ft_has_newline(char *str)
@@ -61,4 +66,21 @@ int	ft_has_newline(char *str)
 		str++;
 	}
 	return (0);
+}
+
+char	*ft_extract_line_and_movebytes(char *buf)
+{
+	char	*newline;
+	int		new_line_position;
+
+	new_line_position = ft_find_newline_position(buf);
+	if (new_line_position >= 0)
+	{
+		newline = malloc(sizeof(char) * (new_line_position + 2));
+		newline = strncpy(newline, buf, new_line_position + 1);
+		newline[new_line_position + 1] = '\0';
+		buf = memmove(buf, buf + new_line_position + 1, ft_strlen(buf) - new_line_position);
+		return (newline);
+	}
+	return (NULL);
 }
