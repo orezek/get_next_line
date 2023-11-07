@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/07 22:25:25 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/07 23:35:26 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,6 @@
 			// and it contines until if either finds a new line or EOF (continues to 0)
 // 3. caller receives a NULL pointer and knows that there is no more data to read.
 
-int	ft_has_newline(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\n')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
 char	*get_next_line(int fd)
 {
 	static char	*buf;
@@ -73,7 +62,6 @@ char	*get_next_line(int fd)
 
 	buffer_size = 50;
 	new_line = NULL;
-// 1
 	if (buf == NULL)
 	{
 		buf = malloc(sizeof(char) * (buffer_size + 1));
@@ -85,12 +73,11 @@ char	*get_next_line(int fd)
 		}
 		buf[bytes_read] = '\0';
 	}
-// 2.1.2
 	if (!ft_has_newline(buf))
 	{
 		while (!ft_has_newline(buf))
 		{
-			new_line = ft_strjoin(new_line, buf); // does strjoin use malloc? what if both are empty or null?
+			new_line = ft_strjoin(new_line, buf);
 			bytes_read = read(fd, buf, buffer_size);
 			if (bytes_read == 0)
 			{
@@ -105,12 +92,10 @@ char	*get_next_line(int fd)
 		free(temp);
 		return (new_line);
 	}
-// 2.1.1
 	if (ft_has_newline(buf))
 	{
 		new_line = ft_extract_line_and_movebytes(buf);
 		return (new_line);
 	}
-// it will never reach this point - no need to free buf
 	return (NULL);
 }
