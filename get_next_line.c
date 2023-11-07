@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_v2.c                                 :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/07 23:35:26 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/08 00:09:02 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,15 @@
 char	*get_next_line(int fd)
 {
 	static char	*buf;
-	size_t		buffer_size;
 	char		*new_line;
 	char		*temp;
 	int			bytes_read;
 
-	buffer_size = 50;
 	new_line = NULL;
 	if (buf == NULL)
 	{
-		buf = malloc(sizeof(char) * (buffer_size + 1));
-		bytes_read = read(fd, buf, buffer_size);
+		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		bytes_read = read(fd, buf, BUFFER_SIZE);
 		if (bytes_read <= 0)
 		{
 			free(buf);
@@ -77,8 +75,11 @@ char	*get_next_line(int fd)
 	{
 		while (!ft_has_newline(buf))
 		{
+			// here is a leak - either implement realloc or move new_line pointer to temp and after strjoin
+			// adds the strings together, free temp and set temp to NULL - by this you free the memory
+			// and prevent leak
 			new_line = ft_strjoin(new_line, buf);
-			bytes_read = read(fd, buf, buffer_size);
+			bytes_read = read(fd, buf, BUFFER_SIZE);
 			if (bytes_read == 0)
 			{
 				free(buf);
