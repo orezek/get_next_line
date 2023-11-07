@@ -20,7 +20,7 @@ void test_get_next_line()
 		free(line);
 		line = get_next_line(fd2);
 	}
-
+	free(line);
 	close(fd2);
 }
 
