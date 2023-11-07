@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:24:23 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/07 22:42:33 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/07 23:16:07 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (0);
 	while(*str++)
 		i++;
 	return (i);
@@ -33,8 +35,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	new_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!new_str)
 		return (NULL);
+	if (s1)
+	{
 	while (s1[i])
 		new_str[j++] = s1[i++];
+	}
 	i = 0;
 	while (s2[i])
 		new_str[j++] = s2[i++];
