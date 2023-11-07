@@ -12,9 +12,15 @@ void test_get_next_line()
 {
 	char *temp_filename2 = "./text.txt";
 	int fd2 = open(temp_filename2, O_RDONLY);
-	char *line = get_next_line(fd2);
-	printf("%s", line);
-	free(line);
+	char *line;
+	line = get_next_line(fd2);
+	while(line != NULL)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd2);
+	}
+
 	close(fd2);
 }
 
