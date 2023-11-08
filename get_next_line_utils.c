@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
+/*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:24:23 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/07 23:16:07 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/08 12:20:33 by orezek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[i])
 		new_str[j++] = s2[i++];
 	new_str[j] = '\0';
+	free(s1);
 	return (new_str);
 }
 
