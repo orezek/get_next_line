@@ -10,7 +10,7 @@
 
 void test_get_next_line()
 {
-	char *temp_filename2 = "./text.txt";
+	char *temp_filename2 = "./read_error.txt";
 	int fd2 = open(temp_filename2, O_RDONLY);
 	char *line;
 	line = get_next_line(fd2);
