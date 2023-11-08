@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
+/*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/08 00:09:02 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/08 15:59:08 by orezek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-// Use standard library functions only for prototypes and for 42 replace them with your own.
-
-// Todo: Add edge case handling.
-	// What if the file doesn't exist?
-	// What if the file is empty?
-	// What if the file is only one line?
-	// What if the file is only one line and it doesn't end with a new line?
-	// What if the file is only one line and it ends with a new line?
-	// What if the file is multiple lines?
-	// What if the file is multiple lines and it doesn't end with a new line?
-	// What if the file is multiple lines and it ends with a new line?
-	// What if the file is multiple lines and it ends with multiple new lines?
-	// What if the file is multiple lines and it ends with multiple new lines and the last line is empty?
-	// What if the file is multiple lines and it ends with multiple new lines and the last line is not empty?
-	// What if the file is multiple lines and it ends with multiple new lines and the last line is not empty and it doesn't end with a new line?
-// Todo: Add error handling.
-	// Check mallocs.
-	// Check read.
-	// Check close.
-	// Check fd.
-	// Check buffer size.
-	// Null all pointers after free.
-
-// Todo: Add support for multiple file descriptors.
-
-// Steps:
-// 0. Caller calls get_next_line with a file descriptor and expects a line from the file or NULL.
-// 1. function entry - is buffer NULL?
-	// 1.1 if it is, allocate memory, read to buf, set trailing \0 to the buffer
-		// do all the checks including EOF and continue to 2.1 (if EOF return NULL)
-	// 1.2 if it is not, continue to 2.1
-// 2.1 check if the buffer contains a new line.
-	// 2.1.1 if it does, it appends the chars including the new line and (manually add \0)
-	//		// into a new_string var, shifts the buffer to the
-			// left and returns the new string var to the caller (continues to 0)
-	// 2.1.2 if it doesn't, it moves (strjoin)? the buffer into
-			// a new_line var, reads to the buffer, sets trailing \0 to the buffer
-			// and it contines until if either finds a new line or EOF (continues to 0)
-// 3. caller receives a NULL pointer and knows that there is no more data to read.
 
 char	*get_next_line(int fd)
 {
@@ -65,38 +25,39 @@ char	*get_next_line(int fd)
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 		if (bytes_read <= 0)
-		{
-			free(buf);
-			return (buf = NULL);
-		}
+			return (free(buf), buf = NULL);
 		buf[bytes_read] = '\0';
 	}
 	if (!ft_has_newline(buf))
 	{
 		while (!ft_has_newline(buf))
 		{
-			// here is a leak - either implement realloc or move new_line pointer to temp and after strjoin
-			// adds the strings together, free temp and set temp to NULL - by this you free the memory
-			// and prevent leak
 			new_line = ft_strjoin(new_line, buf);
 			bytes_read = read(fd, buf, BUFFER_SIZE);
-			if (bytes_read == 0)
-			{
-				free(buf);
-				buf = NULL;
-				return (new_line);
-			}
+			if (bytes_read <= 0 && new_line[0] == '\0')
+				return (free(buf), free(new_line), buf = NULL);
+			if (bytes_read <= 0)
+				return (free(buf), buf = NULL, new_line);
 			buf[bytes_read] = '\0';
 		}
 		temp = ft_extract_line_and_movebytes(buf);
-		new_line = ft_strjoin(new_line, temp);
-		free(temp);
-		return (new_line);
+		return (new_line = ft_strjoin(new_line, temp), free(temp), new_line);
 	}
 	if (ft_has_newline(buf))
-	{
-		new_line = ft_extract_line_and_movebytes(buf);
-		return (new_line);
-	}
+		return (new_line = ft_extract_line_and_movebytes(buf));
 	return (NULL);
+}
+
+ft_not_newline(char *buf, char *new_line, char *temp, int fd)
+{
+	int	bytes_read;
+
+	bytes_read = 0;
+	new_line = ft_strjoin(new_line, buf);
+	bytes_read = read(fd, buf, BUFFER_SIZE);
+	if (bytes_read <= 0 && new_line[0] == '\0')
+		return (free(buf), free(new_line), buf = NULL);
+	if (bytes_read <= 0)
+		return (free(buf), buf = NULL, new_line);
+	buf[bytes_read] = '\0';
 }
