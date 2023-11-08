@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/08 16:13:02 by orezek           ###   ########.fr       */
+/*   Updated: 2023/11/08 18:21:11 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,5 @@ char	*get_next_line(int fd)
 		temp = ft_extract_line_and_movebytes(buf);
 		return (new_line = ft_strjoin(new_line, temp), free(temp), new_line);
 	}
-	if (ft_has_newline(buf))
-		return (new_line = ft_extract_line_and_movebytes(buf));
-	return (NULL);
+	return (new_line = ft_extract_line_and_movebytes(buf));
 }
