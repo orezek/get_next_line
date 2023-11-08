@@ -6,7 +6,7 @@
 /*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/08 15:59:08 by orezek           ###   ########.fr       */
+/*   Updated: 2023/11/08 16:13:02 by orezek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,4 @@ char	*get_next_line(int fd)
 	if (ft_has_newline(buf))
 		return (new_line = ft_extract_line_and_movebytes(buf));
 	return (NULL);
-}
-
-ft_not_newline(char *buf, char *new_line, char *temp, int fd)
-{
-	int	bytes_read;
-
-	bytes_read = 0;
-	new_line = ft_strjoin(new_line, buf);
-	bytes_read = read(fd, buf, BUFFER_SIZE);
-	if (bytes_read <= 0 && new_line[0] == '\0')
-		return (free(buf), free(new_line), buf = NULL);
-	if (bytes_read <= 0)
-		return (free(buf), buf = NULL, new_line);
-	buf[bytes_read] = '\0';
 }
