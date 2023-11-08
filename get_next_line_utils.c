@@ -6,7 +6,7 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:24:23 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/08 18:27:26 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/08 20:57:24 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,6 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*new_str;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!new_str)
-		return (NULL);
-	if (s1)
-	{
-		while (s1[i])
-			new_str[j++] = s1[i++];
-	}
-	i = 0;
-	while (s2[i])
-		new_str[j++] = s2[i++];
-	new_str[j] = '\0';
-	free(s1);
-	return (new_str);
-}
-
 int	ft_find_newline_position(char *str)
 {
 	int	i;
@@ -63,15 +39,39 @@ int	ft_find_newline_position(char *str)
 	return (-1);
 }
 
-int	ft_has_newline(char *str)
+void	*ft_memmove(void *to, const void *from, size_t size)
 {
-	while (*str)
+	unsigned char		*des;
+	const unsigned char	*src;
+
+	des = to;
+	src = from;
+	if (des < src)
 	{
-		if (*str == '\n')
-			return (1);
-		str++;
+		while (size--)
+			*(des++) = *(src++);
 	}
-	return (0);
+	else if (des > src)
+	{
+		des += size;
+		src += size;
+		while (size--)
+			*--des = *--src;
+	}
+	return (to);
+}
+
+char	*ft_strncpy(char *dest, char *src, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	return (dest);
 }
 
 char	*ft_extract_line_and_movebytes(char *buf)
@@ -83,9 +83,9 @@ char	*ft_extract_line_and_movebytes(char *buf)
 	if (nl_pos >= 0)
 	{
 		newline = malloc(sizeof(char) * (nl_pos + 2));
-		newline = strncpy(newline, buf, nl_pos + 1);
+		newline = ft_strncpy(newline, buf, nl_pos + 1);
 		newline[nl_pos + 1] = '\0';
-		buf = memmove(buf, buf + nl_pos + 1, ft_strlen(buf) - nl_pos);
+		buf = ft_memmove(buf, buf + nl_pos + 1, ft_strlen(buf) - nl_pos);
 		return (newline);
 	}
 	return (NULL);
