@@ -6,11 +6,64 @@
 /*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:08:06 by orezek            #+#    #+#             */
-/*   Updated: 2023/11/08 18:44:22 by aldokezer        ###   ########.fr       */
+/*   Updated: 2023/11/08 20:56:34 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	initialize_buffer(int fd, char **buf)
+{
+	int	bytes_read;
+
+	*buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!*buf)
+		return (-1);
+	bytes_read = read(fd, *buf, BUFFER_SIZE);
+	if (bytes_read <= 0)
+	{
+		free(*buf);
+		*buf = NULL;
+		return (-1);
+	}
+	(*buf)[bytes_read] = '\0';
+	return (0);
+}
+
+int	ft_has_newline(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\n')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*new_str;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!new_str)
+		return (NULL);
+	if (s1)
+	{
+		while (s1[i])
+			new_str[j++] = s1[i++];
+	}
+	i = 0;
+	while (s2[i])
+		new_str[j++] = s2[i++];
+	new_str[j] = '\0';
+	free(s1);
+	return (new_str);
+}
 
 char	*get_next_line(int fd)
 {
