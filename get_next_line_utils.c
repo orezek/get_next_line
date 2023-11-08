@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezek <orezek@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: aldokezer <aldokezer@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:24:23 by aldokezer         #+#    #+#             */
-/*   Updated: 2023/11/08 12:20:33 by orezek           ###   ########.fr       */
+/*   Updated: 2023/11/08 18:27:26 by aldokezer        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strlen(char *str)
 	i = 0;
 	if (str == NULL)
 		return (0);
-	while(*str++)
+	while (*str++)
 		i++;
 	return (i);
 }
@@ -37,8 +37,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	if (s1)
 	{
-	while (s1[i])
-		new_str[j++] = s1[i++];
+		while (s1[i])
+			new_str[j++] = s1[i++];
 	}
 	i = 0;
 	while (s2[i])
@@ -77,15 +77,15 @@ int	ft_has_newline(char *str)
 char	*ft_extract_line_and_movebytes(char *buf)
 {
 	char	*newline;
-	int		new_line_position;
+	int		nl_pos;
 
-	new_line_position = ft_find_newline_position(buf);
-	if (new_line_position >= 0)
+	nl_pos = ft_find_newline_position(buf);
+	if (nl_pos >= 0)
 	{
-		newline = malloc(sizeof(char) * (new_line_position + 2));
-		newline = strncpy(newline, buf, new_line_position + 1);
-		newline[new_line_position + 1] = '\0';
-		buf = memmove(buf, buf + new_line_position + 1, ft_strlen(buf) - new_line_position);
+		newline = malloc(sizeof(char) * (nl_pos + 2));
+		newline = strncpy(newline, buf, nl_pos + 1);
+		newline[nl_pos + 1] = '\0';
+		buf = memmove(buf, buf + nl_pos + 1, ft_strlen(buf) - nl_pos);
 		return (newline);
 	}
 	return (NULL);
